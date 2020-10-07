@@ -29,6 +29,7 @@ third = ['Злые языки могут говорить вам обратно�
          'Не нужно бояться одиноких встреч - сегодня то самое время, когда они значат многое',
          'Если встретите незнакомца на пути - проявите участие, и тогда эта встреча посулит вам приятные хлопоты']
 
+
 # Метод, который получает сообщения и обрабатывает их
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
@@ -81,20 +82,23 @@ def get_text_messages(message):
     elif message.text == '/help':
         bot.send_message(message.from_user.id, 'Напиши привет')
     else:
-        bot.send_message (message.from_user.id, 'Я тебя не понимаю, напиши /help')
+        bot.send_message(message.from_user.id, 'Я тебя не понимаю, напиши /help')
 
-@bot.callback_query_handler(func=lambda call:True)
+
+@bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
     # Если нажали на одну из 12 кнопок - выводим гороскоп
     if call.data == 'zodiac':
         # Формируем гороскоп
-        msg = random.choice(first) + ' ' + random.choice(second) + ' ' + random.choice(second_add) + ' ' + random.choice(third)
+        msg = random.choice(first) + ' ' + random.choice(second) + ' ' + random.choice(
+            second_add) + ' ' + random.choice(third)
         # Отправляем гороскоп юзеру
         bot.send_message(call.message.chat.id, msg)
 
+
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    bot.send_message(message.chat.id, 'Привет, это твой первый бот в Telegram ❤️', reply_markup=keyboard)
+    bot.send_message(message.chat.id, 'Привет, это твой первый бот в Telegram ❤️')
 
 
 # @bot.message_handler(content_types=['text'])
@@ -108,4 +112,3 @@ def start_message(message):
 
 if __name__ == '__main__':
     bot.polling(none_stop=True)
-
